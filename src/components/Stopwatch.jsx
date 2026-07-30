@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 function Stopwatch() {
   const [secondsLeft, setSecondsLeft] = useState(60)
   const [isRunning, setIsRunning] = useState(false)
+  const [breathCount, setBreathCount] = useState(0)
 
   const isFinished = secondsLeft === 0
 
@@ -30,11 +31,25 @@ function Stopwatch() {
   function handleReset() {
     setIsRunning(false)
     setSecondsLeft(60)
+    setBreathCount(0)
+  }
+
+  function handleTap() {
+    setBreathCount((prev) => prev + 1)
   }
 
   return (
     <div className="stopwatch">
       <p className="stopwatch-time">{secondsLeft}</p>
+      <p className="breath-count">{breathCount}</p>
+
+      <button
+        className='tap-button'
+        disabled={!isRunning}
+        onClick={handleTap}
+      >
+        タップ
+      </button>
 
       {!isRunning && !isFinished && (
         <button onClick={handleStart}>スタート</button>
