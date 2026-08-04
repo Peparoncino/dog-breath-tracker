@@ -4,6 +4,7 @@ function Stopwatch() {
   const [secondsLeft, setSecondsLeft] = useState(60)
   const [isRunning, setIsRunning] = useState(false)
   const [breathCount, setBreathCount] = useState(0)
+  const [isSaved, setIsSaved] = useState(false)
 
   const isFinished = secondsLeft === 0
 
@@ -32,10 +33,20 @@ function Stopwatch() {
     setIsRunning(false)
     setSecondsLeft(60)
     setBreathCount(0)
+    setIsSaved(false)
   }
 
   function handleTap() {
     setBreathCount((prev) => prev + 1)
+  }
+
+  async function handleConfirm() {
+    await fetch('http://localhost:3001/records', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ breathCount })
+    })
+    setIsSaved(true)
   }
 
   return (
@@ -55,9 +66,13 @@ function Stopwatch() {
         <button onClick={handleStart}>スタート</button>
       )} 
 
-      {isFinished && (
-        <button className="confirm-button">確定</button>
+      {isFinished && !isSaved && (
+        <button className="confirm-button" onClick={handleConfirm}>
+          確定
+        </button>
       )}
+
+      {isSaved && <p className="saved-message">保存しました</p>}
 
       <button onClick={handleReset}>リセット</button>
     </div>
