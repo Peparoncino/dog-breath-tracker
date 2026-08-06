@@ -33,3 +33,10 @@ app.post('/records', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`サーバーがポートに${PORT}で起動しました`)
 })
+
+app.get('/records', async (req, res) => {
+  const [rows] = await db.execute(
+    'select * from records order by recorded_at desc'
+  )
+  res.json(rows)
+})
