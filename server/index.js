@@ -30,6 +30,24 @@ app.post('/records', async (req, res) => {
   res.json({ id: result.insertId })
 })
 
+app.put('/records/:id', async (req, res) => {
+  const { id } = req.params
+  const { breathCount, memo } = req.body
+
+  await db.execute(
+    'UPDATE records SET breath_count = ?, memo = ? WHERE id = ?',
+    [breathCount, memo, id]
+  )
+  res.json({ success: true })
+})
+
+app.delete('/records/:id', async (req, res) => {
+  const { id } = req.params
+
+  await db.execute('DELETE FROM records WHERE id = ?', [id])
+  res.json({ success: true })
+})
+
 app.listen(PORT, () => {
   console.log(`サーバーがポートに${PORT}で起動しました`)
 })
