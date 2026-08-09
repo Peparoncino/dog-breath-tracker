@@ -101,6 +101,27 @@ body {
   font-weight: 600;
 }
 
+.duration-select {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.duration-select button {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.duration-select button.active {
+  background: var(--accent);
+  color: var(--bg-primary);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
 /* RecordList.jsx */
 .record-list {
   max-width: 400px;

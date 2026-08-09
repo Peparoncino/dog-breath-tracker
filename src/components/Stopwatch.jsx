@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 
 function Stopwatch() {
+  const [duration, setDuration] = useState(60)
   const [secondsLeft, setSecondsLeft] = useState(60)
   const [isRunning, setIsRunning] = useState(false)
   const [breathCount, setBreathCount] = useState(0)
@@ -31,7 +32,7 @@ function Stopwatch() {
 
   function handleReset() {
     setIsRunning(false)
-    setSecondsLeft(60)
+    setSecondsLeft(duration)
     setBreathCount(0)
     setIsSaved(false)
   }
@@ -40,22 +41,44 @@ function Stopwatch() {
     setBreathCount((prev) => prev + 1)
   }
 
+  function handleSelectDuration(sec) {
+    setDuration(sec)
+    setSecondsLeft(sec)
+  }
+
   async function handleConfirm() {
+    const multiplier = 60 / duration
+    const normalizedCount = breathCount * multiplier
+
     await fetch('http://localhost:3001/records', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ breathCount })
+      body: JSON.stringify({ breathCount: normalizedCount })
     })
     setIsSaved(true)
   }
 
   return (
     <div className="stopwatch">
+      {!isRunning && !isFinished && (
+        <div className="duration-select">
+          {[60, 30, 15].map((sec) => (
+            <button
+              key={sec}
+              className={duration === sec ? 'active' : ''}
+              onClick={() => handleSelectDuration(sec)}
+            >
+              {sec}秒
+            </button>
+          ))}
+        </div>
+      )}
+
       <p className="stopwatch-time">{secondsLeft}</p>
       <p className="breath-count">{breathCount}</p>
 
       <button
-        className='tap-button'
+        className="tap-button"
         disabled={!isRunning}
         onClick={handleTap}
       >
@@ -64,7 +87,7 @@ function Stopwatch() {
 
       {!isRunning && !isFinished && (
         <button onClick={handleStart}>スタート</button>
-      )} 
+      )}
 
       {isFinished && !isSaved && (
         <button className="confirm-button" onClick={handleConfirm}>
