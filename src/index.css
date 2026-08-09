@@ -1,0 +1,161 @@
+:root {
+  --bg-primary: #16181d;
+  --bg-secondary: #1f2229;
+  --text-primary: #e8e8ea;
+  --text-secondary: #9a9ca3;
+  --accent: #7c9aff;
+  --accent-dim: #3d4568;
+  --danger: #ff6b6b;
+  --border: #2a2d35;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, "Hiragino Sans", sans-serif;
+  min-height: 100vh;
+}
+
+/* Stopwach.jsx */
+.stopwatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 3rem 1.5rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.stopwatch-time {
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.breath-count {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.tap-button {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-dim);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.tap-button:disabled {
+  opacity: 0.3;
+  border-color: var(--border);
+}
+
+.tap-button:not(:disabled):active {
+  background: var(--accent-dim);
+  transform: scale(0.96);
+}
+
+.stopwatch > button:not(.tap-button) {
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 12px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+}
+
+.confirm-button {
+  background: var(--accent) !important;
+  color: #16181d !important;
+}
+
+.saved-message {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* RecordList.jsx */
+.record-list {
+  max-width: 400px;
+  margin: 2rem auto 0;
+  padding: 0 1.5rem;
+}
+
+.record-list > button {
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.record-list ul {
+  list-style: none;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.record-list li {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.record-list li > span {
+  display: block;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.edit-form input {
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.edit-form button {
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.edit-form button:last-child {
+  background: var(--danger);
+  color: white;
+  border: none;
+}
