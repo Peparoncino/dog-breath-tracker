@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 
 function Stopwatch() {
+  const API_URL = import.meta.env.VITE_API_URL
+
   const [duration, setDuration] = useState(60)
   const [secondsLeft, setSecondsLeft] = useState(60)
   const [isRunning, setIsRunning] = useState(false)
@@ -50,7 +52,7 @@ function Stopwatch() {
     const multiplier = 60 / duration
     const normalizedCount = breathCount * multiplier
 
-    await fetch('http://localhost:3001/records', {
+    await fetch(`${API_URL}/records`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ breathCount: normalizedCount })
