@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
 function RecordList() {
+  const API_URL = import.meta.env.VITE_API_URL
+
   const [isOpen, setIsOpen] = useState(false)
   const [records, setRecords] = useState([])
   const [editingId, setEditingId] = useState(null)
@@ -8,7 +10,7 @@ function RecordList() {
   const [editMemo, setEditMemo] = useState('')
 
   async function fetchRecords() {
-    const res = await fetch('http://localhost:3001/records')
+    const res = await fetch(`${API_URL}/records`)
     const data = await res.json()
     setRecords(data)
   }
@@ -33,7 +35,7 @@ function RecordList() {
   }
 
   async function handleSaveEdit(id) {
-    await fetch(`http://localhost:3001/records/${id}`, {
+    await fetch(`${API_URL}/records/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ breathCount: editCount, memo: editMemo })
@@ -43,7 +45,7 @@ function RecordList() {
   }
 
   async function handleDelete(id) {
-    await fetch(`http://localhost:3001/records/${id}`, {
+    await fetch(`${API_URL}/records/${id}`, {
       method: 'DELETE'
     })
     await fetchRecords()
